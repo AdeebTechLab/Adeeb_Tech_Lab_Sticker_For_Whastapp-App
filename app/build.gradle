@@ -10,8 +10,8 @@ android {
         applicationId "com.AdeebTechLab.AdeebTechLabSticker"
         minSdkVersion 23
         targetSdkVersion 35
-        versionCode 6
-        versionName "6.0"
+        versionCode 7
+        versionName "0.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         def contentProviderAuthority = applicationId + ".stickercontentprovider"
         // Creates a placeholder property to use in the manifest.
@@ -53,6 +53,8 @@ android {
 //            universalApk true // Specifies that we want to also generate a universal APK that includes all ABIs.
 //        }
 //    }
+
+    ndkVersion = "29.0.14033849" // e.g.,  ndkVersion "21.3.6528147"
 }
 
 task checkDebug {
@@ -102,19 +104,23 @@ tasks.whenTaskAdded { task ->
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'com.google.android.material:material:1.13.0'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test:runner:1.6.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation 'androidx.test:runner:1.7.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     def fresco_version = '2.5.0'
-    //noinspection GradleDependency
+    //noinspection NewerVersionAvailable,GradleDependency
     implementation "com.facebook.fresco:fresco:$fresco_version"
-    //noinspection GradleDependency
+    //noinspection NewerVersionAvailable,Aligned16KB,GradleDependency
     implementation "com.facebook.fresco:webpsupport:$fresco_version"
-    //noinspection GradleDependency
+    //noinspection NewerVersionAvailable,GradleDependency
     implementation "com.facebook.fresco:animated-webp:$fresco_version"
-    //noinspection GradleDependency
+    //noinspection NewerVersionAvailable,GradleDependency
     implementation "com.facebook.fresco:animated-base:$fresco_version"
+
+
+    implementation 'com.facebook.soloader:soloader:0.12.1'
+
 }
