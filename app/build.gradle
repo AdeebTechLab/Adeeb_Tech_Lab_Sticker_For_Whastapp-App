@@ -4,18 +4,19 @@ android {
     //the compression of webp file during build causes problem with FileDescriptor in ContentProvider.
     aaptOptions {
         noCompress "webp"
+        noCompress ".so"
     }
-    compileSdkVersion 35
+    compileSdkVersion 36
     defaultConfig {
         applicationId "com.AdeebTechLab.AdeebTechLabSticker"
         minSdkVersion 23
-        targetSdkVersion 35
-        versionCode 7
-        versionName "0.7"
+        targetSdkVersion 36
+        versionCode 8
+        versionName "0.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         def contentProviderAuthority = applicationId + ".stickercontentprovider"
         // Creates a placeholder property to use in the manifest.
-        manifestPlaceholders =
+        manifestPlaceholders = 
                 [contentProviderAuthority: contentProviderAuthority]
         // Adds a new field for the authority to the BuildConfig class.
         buildConfigField("String",
@@ -39,22 +40,18 @@ android {
         targetCompatibility = '1.8'
     }
 
-    packagingOptions {
-        exclude 'lib/*/libnative-imagetranscoder.so'
-        exclude 'lib/*/libnative-filters.so'
-    }
     namespace 'com.AdeebTechLab.AdeebTechLabSticker'
 
     // Configures multiple APKs based on ABI.
     // see https://developer.android.com/studio/build/configure-apk-splits#configure-abi-split
-//    splits {
-//        abi {
-//            enable true // Enables building multiple APKs per ABI.
-//            universalApk true // Specifies that we want to also generate a universal APK that includes all ABIs.
-//        }
-//    }
+    splits {
+        abi {
+            enable true // Enables building multiple APKs per ABI.
+            universalApk true // Specifies that we want to also generate a universal APK that includes all ABIs.
+        }
+    }
 
-    ndkVersion = "29.0.14033849" // e.g.,  ndkVersion "21.3.6528147"
+    ndkVersion = "26.1.10909125" // e.g.,  ndkVersion "21.3.6528147"
 }
 
 task checkDebug {
@@ -110,7 +107,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
-    def fresco_version = '2.5.0'
+    def fresco_version = '3.6.0'
     //noinspection NewerVersionAvailable,GradleDependency
     implementation "com.facebook.fresco:fresco:$fresco_version"
     //noinspection NewerVersionAvailable,Aligned16KB,GradleDependency
