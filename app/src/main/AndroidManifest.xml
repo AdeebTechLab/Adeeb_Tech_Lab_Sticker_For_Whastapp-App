@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name="com.AdeebTechLab.AdeebTechLabSticker.StickerApplication"
+        android:name=".StickerApplication"
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
@@ -11,28 +11,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:extractNativeLibs="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.AdeebTechLab.AdeebTechLabSticker.EntryActivity"
-            android:exported="true">
+        <activity android:name=".EntryActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.AdeebTechLab.AdeebTechLabSticker.StickerPackListActivity" />
+        <activity android:name=".StickerPackListActivity" />
         <activity
-            android:name="com.AdeebTechLab.AdeebTechLabSticker.StickerPackDetailsActivity"
-            android:parentActivityName="com.AdeebTechLab.AdeebTechLabSticker.StickerPackListActivity"
+            android:name=".StickerPackDetailsActivity"
+            android:parentActivityName=".StickerPackListActivity"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.AdeebTechLab.AdeebTechLabSticker.StickerPackListActivity" />
         </activity>
         <activity
-            android:name="com.AdeebTechLab.AdeebTechLabSticker.StickerPackInfoActivity"
+            android:name=".StickerPackInfoActivity"
             android:label="@string/title_activity_sticker_pack_info"
-            android:parentActivityName="com.AdeebTechLab.AdeebTechLabSticker.StickerPackDetailsActivity"
+            android:parentActivityName=".StickerPackDetailsActivity"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -40,7 +38,7 @@
         </activity>
 
         <provider
-            android:name="com.AdeebTechLab.AdeebTechLabSticker.StickerContentProvider"
+            android:name=".StickerContentProvider"
             android:authorities="${contentProviderAuthority}"
             android:enabled="true"
             android:exported="true"
