@@ -1,22 +1,29 @@
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 apply plugin: 'com.android.application'
 
 android {
     //the compression of webp file during build causes problem with FileDescriptor in ContentProvider.
     aaptOptions {
         noCompress "webp"
-        noCompress ".so"
     }
     compileSdkVersion 36
     defaultConfig {
         applicationId "com.AdeebTechLab.AdeebTechLabSticker"
-        minSdkVersion 23
-        targetSdkVersion 36
+        minSdk 24
+        targetSdk 36
         versionCode 8
         versionName "0.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         def contentProviderAuthority = applicationId + ".stickercontentprovider"
         // Creates a placeholder property to use in the manifest.
-        manifestPlaceholders = 
+        manifestPlaceholders =
                 [contentProviderAuthority: contentProviderAuthority]
         // Adds a new field for the authority to the BuildConfig class.
         buildConfigField("String",
@@ -36,30 +43,35 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
+    packagingOptions {
+        exclude 'lib/*/libnative-imagetranscoder.so'
+        exclude 'lib/*/libnative-filters.so'
+    }
     namespace 'com.AdeebTechLab.AdeebTechLabSticker'
 
     // Configures multiple APKs based on ABI.
     // see https://developer.android.com/studio/build/configure-apk-splits#configure-abi-split
-    splits {
-        abi {
-            enable true // Enables building multiple APKs per ABI.
-            universalApk true // Specifies that we want to also generate a universal APK that includes all ABIs.
-        }
-    }
+//    splits {
+//        abi {
+//            enable true // Enables building multiple APKs per ABI.
+//            universalApk true // Specifies that we want to also generate a universal APK that includes all ABIs.
+//        }
+//    }
 
-    ndkVersion = "26.1.10909125" // e.g.,  ndkVersion "21.3.6528147"
+
+    ndkVersion = "29.0.14206865" // e.g.,  ndkVersion "21.3.6528147"
 }
 
 task checkDebug {
     doLast {
         println("checkDebug")
-  //      if (android.defaultConfig.applicationId.startsWith("com.whatsapp")) {
-    //        throw new GradleException("applicationId in defaultConfig cannot start with com.whatsapp, please change your applicationId in app/build.gradle")
-      //  }
+        if (android.defaultConfig.applicationId.startsWith("com.whatsapp")) {
+            throw new GradleException("applicationId in defaultConfig cannot start with com.whatsapp, please change your applicationId in app/build.gradle")
+        }
         checkApplicationIdInDebug()
     }
 }
@@ -69,8 +81,8 @@ private void checkApplicationIdInDebug() {
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
     def ignoreApplicationIdCheck = properties.getProperty('ignoreApplicationIdCheck')
     if (ignoreApplicationIdCheck == null) {
-        if (android.defaultConfig.applicationId == "com.example.AdeebTechLabSticker") {
-            throw new GradleException("Your applicationId is currently com.example.AdeebTechLabSticker, please change your applicationId to a different string in app/build.gradle in line 10")
+        if (android.defaultConfig.applicationId == "com.example.samplestickerapp") {
+            throw new GradleException("Your applicationId is currently com.example.samplestickerapp, please change your applicationId to a different string in app/build.gradle in line 10")
         }
     } else {
         println("application id check ignored")
@@ -108,16 +120,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     def fresco_version = '3.6.0'
-    //noinspection NewerVersionAvailable,GradleDependency
     implementation "com.facebook.fresco:fresco:$fresco_version"
-    //noinspection NewerVersionAvailable,Aligned16KB,GradleDependency
     implementation "com.facebook.fresco:webpsupport:$fresco_version"
-    //noinspection NewerVersionAvailable,GradleDependency
     implementation "com.facebook.fresco:animated-webp:$fresco_version"
-    //noinspection NewerVersionAvailable,GradleDependency
     implementation "com.facebook.fresco:animated-base:$fresco_version"
-
-
-    implementation 'com.facebook.soloader:soloader:0.12.1'
-
+    implementation 'com.facebook.infer.annotation:infer-annotation:0.18.0'
 }
